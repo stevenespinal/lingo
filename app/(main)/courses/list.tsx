@@ -20,7 +20,6 @@ export const List = ({ courses, activeCourseId }: Props) => {
   const onClick = (id: number) => {
     if (pending) return;
 
-    console.log("🚀 ~ onClick ~ id === activeCourseId:", id, activeCourseId);
     if (id === activeCourseId) {
       return router.push("/learn");
     }
