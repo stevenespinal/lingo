@@ -5,6 +5,7 @@ import {
   challengeProgress,
   challenges,
   challengesEnum,
+  userSubscription,
 } from "@/db/schema";
 import { useState, useTransition } from "react";
 import { Header } from "./header";
@@ -30,7 +31,11 @@ type Props = {
     completed: boolean;
     challengeOptions: (typeof challengeOptions.$inferSelect)[];
   })[];
-  userSubscription: any;
+  userSubscription:
+    | (typeof userSubscription.$inferInsert & {
+        isActive: boolean;
+      })
+    | null;
 };
 
 export const Quiz = ({
@@ -104,8 +109,16 @@ export const Quiz = ({
             Great job! <br /> You&apos;ve completed the lesson.
           </h1>
           <div className="flex items-center gap-x-4 w-full">
-            <ResultCard variant="points" value={challenges.length * 10} />
-            <ResultCard variant="hearts" value={hearts} />
+            <ResultCard
+              variant="points"
+              value={challenges.length * 10}
+              hasActiveSubscription={!!userSubscription?.isActive}
+            />
+            <ResultCard
+              variant="hearts"
+              value={hearts}
+              hasActiveSubscription={!!userSubscription?.isActive}
+            />
           </div>
         </div>
         <Footer

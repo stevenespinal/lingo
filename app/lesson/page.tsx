@@ -1,10 +1,11 @@
-import { getLesson, getUserProgress } from "@/db/queries";
+import { getLesson, getUserProgress, getUserSubscription } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { Quiz } from "./quiz";
 
 const LessonPage = async () => {
   const lesson = await getLesson();
   const userProgress = await getUserProgress();
+  const userSubscription = await getUserSubscription();
 
   if (!lesson || !userProgress) {
     redirect("/learn");
@@ -20,7 +21,7 @@ const LessonPage = async () => {
       initialLessonId={lesson.id}
       initialHearts={userProgress.hearts}
       initialLessonChallenges={lesson.challenges}
-      userSubscription={null}
+      userSubscription={userSubscription}
     />
   );
 };
